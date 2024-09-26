@@ -62,14 +62,18 @@ void loop(){
     float i = ki * error * deltaTime;
     float gyroAngleY = gyroAngleY * deltaTime;
 
+    //complementary filter (by pass)
     angleY = alpha * (angleY + gyroAngleY) + (1.0 - alpha) * accelAngleY;
-    float d = kd * (gyroRateY - lastGyroRateY);
-    lastGyroRateY = gyroRateY;
+    float d = kd * (gyroRateY - lastGyroRateY); //passa baixa (acelerometer)
+    lastGyroRateY = gyroRateY; //passa alta (gyroscope)
 
+    //error rate (PID controller)
     float pinOutput = Kp * error + Ki * errorSum + Kd * dError;
     errorSum += error * dt;
     dError = (gyroRateY - lastGyroRateY) / dt;
     lastGyroRateY = gyroRateY;
+
+    float error = setpoint - angleY;
 
     int servoValue = map(pinOutput, -10, 10, 0, 180);
     servo.attach(servoPin);
@@ -77,8 +81,10 @@ void loop(){
     servo.write(servoValue);
 
     Serial.print("Accel Angle Y: ");Serial.println(accelAngleY);
+    Serisl.print("Filtered Angle Y: ");Serial.println(angleY);
     Serial.print("PID Output: "); Serial.println(pidOutput);
 
     Serial.print(accelAngleY); Serial.println(",");
+    Serial.print(angleY); Serial.println(",");
     Serial.print(pidOutput); Serial.print(",");
 }
