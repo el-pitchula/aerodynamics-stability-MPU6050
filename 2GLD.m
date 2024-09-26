@@ -9,9 +9,9 @@ Adafruit_MPU6050 mpu;
 float setpoint = 0;
 float errorSum = 0;
 float lastError = 0;
-float kp = 0.1;
-float ki = 0.0;
-float kd = 0.0;
+float kp = 1;
+float ki = 0.02;
+float kd = 0;
 unsigned long lastTime = 0;
 
 float alpha = 0.98;
@@ -76,5 +76,9 @@ void loop(){
     servoValue = constrain(servoValue, 0, 180);
     servo.write(servoValue);
 
-    //prints
+    Serial.print("Accel Angle Y: ");Serial.println(accelAngleY);
+    Serial.print("PID Output: "); Serial.println(pidOutput);
+
+    Serial.print(accelAngleY); Serial.println(",");
+    Serial.print(pidOutput); Serial.print(",");
 }
