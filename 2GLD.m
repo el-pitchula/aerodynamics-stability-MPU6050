@@ -87,4 +87,17 @@ void loop(){
     Serial.print(accelAngleY); Serial.println(",");
     Serial.print(angleY); Serial.println(",");
     Serial.print(pidOutput); Serial.print(",");
+
+    void loop(){
+        sensors_event_t a, g, temp;
+        mpu.getEvent(&a, &g, &temp);
+
+        float xGyro = g.torque.x;
+        float yGyro = g.torque.y;
+        float zGyro = g.torque.z;
+
+        //complementary filter
+        float accelAngleY = atan2
+    
+    }
 }
