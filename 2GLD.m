@@ -98,6 +98,8 @@ void loop(){
 
         //complementary filter
         float accelAngleY = atan2
-    
+        float gyroAngleY = g.gyro.y;
+
+        //Kalman filter test
     }
 }
